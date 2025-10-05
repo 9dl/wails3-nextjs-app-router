@@ -1,0 +1,9 @@
+{
+  "name": "nextjs-tailwind-typescript",
+  "shortname": "nextjs-starter",
+  "author": "9dl",
+  "description": "Wails3 Next.js App Router + TailwindCSS + TypeScript template",
+  "helpurl": "",
+  "version": "v0.0.1",
+  "schema": 3
+}
