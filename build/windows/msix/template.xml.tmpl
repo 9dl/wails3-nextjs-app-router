@@ -13,23 +13,38 @@
         InstallLocation="C:\Program Files\{{.ProductCompany}}\{{.ProductName}}">
     </Installer>
     <PackageInformation
-        PackageName="My Product"
-        PackageDisplayName="My Product"
-        PublisherName="CN=My Company"
-        PublisherDisplayName="My Company"
-        Version="0.1.0.0"
-        PackageDescription="My Product Description">
+        PackageName="{{.ProductName}}"
+        PackageDisplayName="{{.ProductName}}"
+        PublisherName="CN={{.ProductCompany}}"
+        PublisherDisplayName="{{.ProductCompany}}"
+        Version="{{.ProductVersion}}.0"
+        PackageDescription="{{.ProductDescription}}">
         <Capabilities>
             <Capability Name="runFullTrust" />
-
+            {{if .FileAssociations}}
+            <Capability Name="documentsLibrary" />
+            {{end}}
         </Capabilities>
         <Applications>
             <Application
                 Id="{{.ProductIdentifier}}"
-                Description="My Product Description"
-                DisplayName="My Product"
+                Description="{{.ProductDescription}}"
+                DisplayName="{{.ProductName}}"
                 ExecutableName="{{.ExecutableName}}"
                 EntryPoint="Windows.FullTrustApplication">
+                {{if .FileAssociations}}
+                <Extensions>
+                    <Extension Category="windows.fileTypeAssociation">
+                        <FileTypeAssociation Name="{{.ProductIdentifier}}">
+                            {{range .FileAssociations}}
+                            <SupportedFileTypes>
+                                <FileType>.{{.Ext}}</FileType>
+                            </SupportedFileTypes>
+                            {{end}}
+                        </FileTypeAssociation>
+                    </Extension>
+                </Extensions>
+                {{end}}
             </Application>
         </Applications>
         <Resources>
@@ -40,9 +55,9 @@
         </Dependencies>
         <Properties>
             <Framework>false</Framework>
-            <DisplayName>My Product</DisplayName>
-            <PublisherDisplayName>My Company</PublisherDisplayName>
-            <Description>My Product Description</Description>
+            <DisplayName>{{.ProductName}}</DisplayName>
+            <PublisherDisplayName>{{.ProductCompany}}</PublisherDisplayName>
+            <Description>{{.ProductDescription}}</Description>
             <Logo>Assets\AppIcon.png</Logo>
         </Properties>
     </PackageInformation>
